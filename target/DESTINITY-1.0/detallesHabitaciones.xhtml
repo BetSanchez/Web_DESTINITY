@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:c="jakarta.tags.core"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>DESTINITY | Habitaciones y servicios</title>
+
+        <!-- Sección de bootstrap-->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <h:outputStylesheet name="css/styles.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"/>
+
+        <!--                      -->
+    </h:head>
+    <h:body>
+        <!--Contenido de la página web-->
+
+        <!--Encabezado-->
+        <header>
+            <div class="px-3 py-1 text-bg-dark border-bottom">
+                <div class="container">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                        <div class="d-flex flex-column my-2 my-lg-0 me-lg-3 text-white text-decoration-none text-center">
+                            <p><b><h3>Alojamientos</h3></b> </p>
+                        </div>
+
+                        <!-- Botones-->
+                        <div class="d-flex justify-content-end my-2 my-lg-0 text-white text-decoration-none text-center">
+                            <!-- Botón de cerrar sesión -->
+                            <a href="./Principal_1.xhtml" class="mx-2"><button  class="btn btn-info" type="submit">Principal</button></a>      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--                          -->
+        <div class="container card mt-3 p-3">
+            <div class="container mt-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>Elija una fecha de llegada y salida</h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <h:form id="dateForm">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="fechaEntrada" class="form-label">Fecha de Llegada</label>
+                                    <h:inputText id="fechaEntrada" value="#{ejemploXMLH.fechaEntradaStr}" type="date" class="form-control"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="fechaSalida" class="form-label">Fecha de Salida</label>
+                                    <h:inputText id="fechaSalida" value="#{ejemploXMLH.fechaSalidaStr}" type="date" class="form-control"/>
+                                </div>
+                                <h:panelGroup layout="block">
+                                    <div class="col-md-4 d-flex justify-content-end align-items-center">
+                                    <h:outputLink value="Login.xhtml" rendered="#{!buttonController.isLoggedIn}">
+                                        <h:commandButton value="Generar Compra" class="btn btn-success align-right-button" action="Login.xhtml"/>
+                                    </h:outputLink>
+                                    <h:outputLink value="Login.xhtml" rendered="#{buttonController.isLoggedIn}">
+                                        <h:commandButton value="Generar Compra"  class="btn btn-success align-right-button" action="#{ejemploXMLH.generarCompra(buttonController.mostrarValorDeC(), buttonController.mostrarNumCuenta(), ejemploXMLH.fechaEntradaStr, ejemploXMLH.fechaSalidaStr)}"/>
+                                    </h:outputLink>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+
+
+            <!-- División en dos columnas para servicios  -->
+            <div class="row">
+                <!-- Columna de boletos disponibles -->
+                <div class="col-md-6">
+                    <h2>Servicios Disponibles</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Descripción</th>
+                                <th>Costo</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{ejemploXMLH.detallesServicios}" var="asientoSel">
+                                <ui:fragment rendered="#{ejemploXMLH.checarBoletoDis2(asientoSel.idServicio)}">
+                                    <tr>
+                                        <td>#{asientoSel.idServicio}</td>
+                                        <td>#{asientoSel.descripcion}</td>
+                                        <td>#{asientoSel.costo}</td>
+                                        <td>
+                                            <h:form>
+                                                <h:commandButton value="Agregar" action="#{ejemploXMLH.agregarBoleto2(asientoSel.idServicio)}" class="btn btn-primary">
+                                                    <f:ajax execute="@this" render="@this :messages :downloadLink" onevent="handleAjaxResponse"/>
+                                                </h:commandButton>
+                                            </h:form>
+                                        </td>
+                                    </tr>
+                                </ui:fragment>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Columna de habitaciones no disponibles -->
+                <div class="col-md-6">
+                    <h2>Servicios Reservados</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Descripción</th>
+                                <th>Costo</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{ejemploXMLH.detallesServicios}" var="asientoSel">
+                                <ui:fragment rendered="#{ejemploXMLH.checarBoletoRes2(asientoSel.idServicio)}">
+                                    <tr>
+                                        <td>#{asientoSel.idServicio}</td>
+                                        <td>#{asientoSel.descripcion}</td>
+                                        <td>#{asientoSel.costo}</td>
+                                        <td>
+                                            <h:form>
+                                                <h:commandButton value="Quitar reservación" action="#{ejemploXMLH.quitarBoleto2(asientoSel.idServicio)}" class="btn btn-danger">
+                                                    <f:ajax execute="@this" render="@this :messages :downloadLink" onevent="handleAjaxResponse"/>
+                                                </h:commandButton>
+                                            </h:form>
+                                        </td>
+                                    </tr>
+                                </ui:fragment>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- División en dos columnas para habitaciones  -->
+            <div class="row">
+                <!-- Columna de boletos disponibles -->
+                <div class="col-md-6">
+                    <h2>Habitaciones Disponibles</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Habitacion</th>
+                                <th>Tipo</th>
+                                <th>Capacidad</th>
+                                <th>Costo</th>
+                                <th>Impuesto</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{ejemploXMLH.detallesHabitacion}" var="asientoSel">
+                                <ui:fragment rendered="#{ejemploXMLH.checarBoletoDis(asientoSel.idHabitacion)}">
+                                    <tr>
+                                        <td>#{asientoSel.idHabitacion}</td>
+                                        <td>#{asientoSel.identificador}</td>
+                                        <td>#{asientoSel.capacidad}</td>
+                                        <td>#{asientoSel.costo}</td>
+                                        <td>#{asientoSel.costo * 0.40}</td>
+                                        <td>
+                                            <h:form>
+                                                <h:commandButton value="Agregar" action="#{ejemploXMLH.agregarBoleto(asientoSel.idHabitacion)}" class="btn btn-primary">
+                                                    <f:ajax execute="@this" render="@this :messages :downloadLink" onevent="handleAjaxResponse"/>
+                                                </h:commandButton>
+                                            </h:form>
+                                        </td>
+                                    </tr>
+                                </ui:fragment>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Columna de habitaciones no disponibles -->
+                <div class="col-md-6">
+                    <h2>Habitaciones Reservadas</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Habitacion</th>
+                                <th>Tipo</th>
+                                <th>Capacidad</th>
+                                <th>Costo</th>
+                                <th>Impuesto</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{ejemploXMLH.detallesHabitacion}" var="asientoSel">
+                                <ui:fragment rendered="#{ejemploXMLH.checarBoletoRes(asientoSel.idHabitacion)}">
+                                    <tr>
+                                        <td>#{asientoSel.idHabitacion}</td>
+                                        <td>#{asientoSel.identificador}</td>
+                                        <td>#{asientoSel.capacidad}</td>
+                                        <td>#{asientoSel.costo}</td>
+                                        <td>#{asientoSel.costo * 0.40}</td>
+                                        <td>
+                                            <h:form>
+                                                <h:commandButton value="Quitar reservación" action="#{ejemploXMLH.quitarBoleto(asientoSel.idHabitacion)}" class="btn btn-danger">
+                                                    <f:ajax execute="@this" render="@this :messages :downloadLink" onevent="handleAjaxResponse"/>
+                                                </h:commandButton>
+                                            </h:form>
+                                        </td>
+                                    </tr>
+                                </ui:fragment>
+                            </ui:repeat>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Sección de bootstrap-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <!--                      -->
+
+        <footer class="px-3 py-1 text-bg-dark text-center border-bottom">
+            <p>&copy; 2024 DESTINITY. Todos los derechos reservados.</p>
+        </footer>
+    </h:body>
+</html>
+

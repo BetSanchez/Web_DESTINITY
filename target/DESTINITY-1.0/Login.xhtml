@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+    <h:head>
+        <title>Destinity | Inicio de sesión</title>
+        <!-- Sección de bootstrap-->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+        <!--                      -->
+        <style>
+            .card {
+                width: 30rem;
+            }
+            .error-message {
+                color: red;
+                list-style: none;
+                padding: 0;
+            }
+            .card-subtitle {
+                font-size: 1.2rem;
+            }
+            .send {
+                display: flex;
+                justify-content: center;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+            <h:form id="loginForm">
+                <div class="card p-3">
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h6 class="card-subtitle mb-2 text-body-secondary text-center">INICIO DE SESIÓN</h6>
+                        <div class="container my-4">
+                            <!-- Mensajes Globales -->
+                            <h:messages globalOnly="true" styleClass="error-message mb-3" />
+                            <h:panelGroup layout="block">
+                                <!-- Correo Electrónico -->
+                                <h:panelGroup layout="block" style="mb-4">
+                                    <h:outputLabel for="email" value="Correo electrónico" styleClass="form-label"/>
+                                    <h:inputText id="email" value="#{buttonController.c.correo}" 
+                                                 type="email" 
+                                                 required="true" 
+                                                 requiredMessage="El correo electrónico es obligatorio"
+                                                 styleClass="form-control"/>
+                                    <h:message for="email" styleClass="error-message"/>
+                                </h:panelGroup>
+                                <!-- Contraseña -->
+                                <h:panelGroup layout="block" style="mt-4">
+                                    <h:outputLabel for="password" value="Contraseña" styleClass="form-label"/>
+                                    <h:inputSecret id="password" value="#{buttonController.c.password}" 
+                                                   required="true" 
+                                                   requiredMessage="La contraseña es obligatoria"
+                                                   styleClass="form-control"/>
+                                    <h:message for="password" styleClass="error-message"/>
+                                </h:panelGroup>
+                                <!-- Botón de Enviar -->
+                                <h:panelGroup layout="block" styleClass="send mt-3">
+                                    <h:commandButton value="Ingresar" action="#{buttonController.validarLogin()}" 
+                                                     styleClass="btn btn-primary"/>
+                                    <h:commandButton value="Mostrar valor de c" action="#{buttonController.mostrarValorDeC}" />
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+
+        <!-- Sección de bootstrap-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <!--                      -->
+    </h:body>
+</html>

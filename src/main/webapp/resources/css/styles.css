@@ -1,0 +1,13 @@
+*{
+    box-sizing: border-box;
+    font-family: system-ui;
+}
+.icons {
+    width: 150px;
+    justify-content: center;
+}
+
+.icons > i{
+    margin: 0px 10px;
+    cursor: pointer;
+}

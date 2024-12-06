@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+    <h:head>
+        <title>DESTINITY</title>
+        <!-- Sección de bootstrap-->
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <h:outputStylesheet name="css/styles.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/headers/"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"/>
+        <!--                      -->
+        <style>
+            .hero {
+                background: linear-gradient(to right, #FBB9FE,#67C7FC, #9CD1EE, #F1FC95);
+                color: white;
+                padding: 50px 0;
+            }
+
+            .nav-tabs .nav-link {
+                background-color: #5A67D8;
+                color: white;
+                border: none;
+            }
+            .nav-tabs .nav-link.active {
+                background-color: white;
+                color: #5A67D8;
+                border: none;
+            }
+            .form-control {
+                border-radius: 0;
+                height: calc(1.5em + 0.75rem + 2px); /* Ajuste de altura */
+                font-size: 0.875rem; /* Tamaño de fuente reducido */
+            }
+            .form-label {
+                font-size: 0.875rem;
+            }
+            .btn {
+                border-radius: 0;
+            }
+            .hero-with-background {
+                background-image: url('https://cdn-3.expansion.mx/dims4/default/f30cbeb/2147483647/strip/true/crop/6553x4244+0+0/resize/1200x777!/format/webp/quality/60/?url=https%3A%2F%2Fcdn-3.expansion.mx%2F3f%2F58%2Fe40c85894fb291192144ea18ca63%2Faeromexico-viajes.jpg'); /* Reemplaza con la URL de tu imagen */
+                background-size: cover; /* Ajusta el tamaño de la imagen para cubrir el elemento */
+                background-position: center; /* Centra la imagen */
+                height: 100vh; /* Establece la altura del elemento, ajusta según sea necesario */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff; /* Ajusta el color del texto según sea necesario */
+            }
+            .font-size-lg {
+                font-size: 25px; /* Ajusta el tamaño de la letra según sea necesario */
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <!--Encabezado-->
+        <header>
+            <div class="px-3 py-1 text-bg-dark border-bottom">
+                <div class="container">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                        <!-- Información del administrador -->
+                        <div class="d-flex flex-column my-2 my-lg-0 me-lg-3 text-white text-decoration-none text-center">
+                            <p><b><h1>DESTINITY</h1></b> </p>
+                        </div>
+                        <!-- Botones-->          
+
+                        <h:form>
+                            <h:panelGroup layout="block">
+                                <h:outputLink value="Login.xhtml" rendered="#{!buttonController.isLoggedIn}">
+                                    <h:commandButton value="Iniciar sesión" class="btn btn-info" action="Login.xhtml" style="margin-right: 10px;"/>
+                                </h:outputLink>
+                                <h:outputLink value="Registro.xhtml" rendered="#{!buttonController.isLoggedIn}">
+                                    <h:commandButton value="Crear cuenta" class="btn btn-info" action="Registro.xhtml" style="margin-left: 10px;"/>
+                                </h:outputLink>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <h:outputLink value="ActualizarDatos.xhtml" rendered="#{buttonController.isLoggedIn}">
+                                    <h:commandButton value="Actualizar datos" class="btn btn-info" action="ActualizarDatos.xhtml" style="margin-left: 10px;" />
+                                </h:outputLink>
+                                <h:outputLink value="#" rendered="#{buttonController.isLoggedIn}">
+                                    <h:commandButton value="Cerrar sesión" class="btn btn-info" action="#{buttonController.logout()}" style="margin-left: 10px;" />
+                                </h:outputLink>
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--Principal-->
+        <div class="hero hero-with-background">
+            <div class="container">
+                <h1 class="text-center text-black">Busca tu destino <strong></strong></h1>
+                <ul class="nav nav-tabs justify-content-center mt-4" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active font-size-lg" id="hoteles-tab" data-toggle="tab" href="Alojamientos.xhtml" role="tab" aria-controls="hoteles" aria-selected="true">Hoteles</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active font-size-lg" id="vuelos-tab" data-toggle="tab" href="Vuelos.xhtml" role="tab" aria-controls="vuelos" aria-selected="false">Vuelos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <footer class="px-3 py-1 text-bg-dark text-center border-bottom">
+            <p>&copy; 2024 DESTINITY. Todos los derechos reservados.</p>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </h:body>
+</html>
